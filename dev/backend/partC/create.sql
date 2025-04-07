@@ -52,7 +52,6 @@ CREATE TABLE Playlist (
     Playlist_ID INT PRIMARY KEY,
     Tag VARCHAR(50),
     Playlist_Name VARCHAR(100) NOT NULL,
-    Num_Tracks INT DEFAULT 0,
     FOREIGN KEY (Tag) REFERENCES Users(Tag) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -128,31 +127,3 @@ CREATE TABLE Rating (
     Rating_Value FLOAT NOT NULL CHECK (Rating_Value BETWEEN 0.0 AND 10.0),
     FOREIGN KEY (Interaction_ID) REFERENCES Interaction(Interaction_ID) ON DELETE CASCADE
 );
-
--- Create Chart Table
-CREATE TABLE Chart (
-    Chart_ID INT PRIMARY KEY,
-    Category VARCHAR(50) NOT NULL,
-    Avg_Ranking FLOAT
-);
-
--- Create Track_Rank Table
-CREATE TABLE Track_Rank (
-    Track_ID INT,
-    Chart_ID INT,
-    Rank INT NOT NULL,
-    PRIMARY KEY (Track_ID, Chart_ID),
-    FOREIGN KEY (Track_ID) REFERENCES Track(Track_ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (Chart_ID) REFERENCES Chart(Chart_ID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- Create Album_Rank Table
-CREATE TABLE Album_Rank (
-    Album_ID INT,
-    Chart_ID INT,
-    Rank INT NOT NULL,
-    PRIMARY KEY (Album_ID, Chart_ID),
-    FOREIGN KEY (Album_ID) REFERENCES Album(Album_ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (Chart_ID) REFERENCES Chart(Chart_ID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
