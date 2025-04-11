@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./style.css" />
     <title>Album</title>
   </head>
   <body>
-		<div class="imagecenter">
-     <ul>
-        <li>[Album name]</li>
-        <li>[Artist name]</li>
-        <li>[Release date]</li>
-     </ul>
-     <img width="40%"src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages-na.ssl-images-amazon.com%2Fimages%2FI%2F71Vv6xjNQZL._SL1287_.jpg&f=1&nofb=1&ipt=fc4ea5c19084fbd2d1f16ab0f4c1e6a1b45cfa1545875a83c2658ebfa2371772&ipo=images" alt="Album Cover"> 
-		</div>
+    <div class="container">
+      <h1>Album Info</h1>
+      <div class="grid">
+        <div class="card">
+          <ul>
+            <li><strong>Album:</strong> [Album name]</li>
+            <li><strong>Artist:</strong> [Artist name]</li>
+            <li><strong>Release:</strong> [Release date]</li>
+          </ul>
+        </div>
+        <div class="card">
+          <img
+            src="./img/placeholder_album_art.jpg"
+            alt="Album Cover"
+            style="width: 100%; border-radius: 5px;"
+          />
+        </div>
+      </div>
+    </div>
   </body>
 </html>
