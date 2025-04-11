@@ -1,27 +1,17 @@
 body {
-  background: #212121;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
   padding: 0 24px;
   margin: 0;
   height: 150vh;
-  color: white;
   justify-content: center;
   align-items: center;
 }
-	.center {
-  margin: auto;
-  width: 60%;
-  text-align: center;
-  padding: 10px;
-}
 
-	.dashboard {
-  margin: auto;
-  width: 100%;
-  text-align: left;
-  display: inline-block;
-  border-style: solid;
-  border-color: #00aaff;
-  padding: 10px;
+a {
+  color: #00aaff;
+  text-decoration: none;
 }
 
 .button {
@@ -31,12 +21,68 @@ body {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  margin: 5px;
 }
+
 .container {
   padding: 20px;
 }
 
-.imagecenter{
+h1, h2 {
+  color: #00aaff;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #111;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  text-align: center;
+  padding: 10px;
+}
+
+.dashboard {
+  margin: auto;
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+  border-style: solid;
+  border-color: #00aaff;
+  padding: 10px;
+}
+
+.imagecenter {
   margin: auto;
   width: 50%;
   display: flex;
