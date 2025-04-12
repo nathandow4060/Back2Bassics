@@ -22,6 +22,53 @@ a {
   cursor: pointer;
   border-radius: 5px;
   margin: 5px;
+  transition-duration: 0.4s
+}
+
+.button:hover, .button:focus {
+	background-color: #0088dd;
+}
+
+.button-gray {
+  background-color: dimgray;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s
+}
+
+.button-gray:hover, .button:focus {
+	background-color: #323232;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content line{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content line:hover {
+	background-color: #ddd;
+}
+.dropdown:hover .dropdown-content {
+	display: block;
 }
 
 .container {
