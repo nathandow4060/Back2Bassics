@@ -9,33 +9,96 @@
   <body>
     <div class="container">
       <h1>Album Info</h1>
-      <div class="grid">
-        <div class="card">
-          <ul>
-            <li><strong>Album:</strong> [Album name]</li>
-            <li><strong>Artist:</strong> [Artist name]</li>
-            <li><strong>Release:</strong> [Release date]</li>
-			<li><strong>Likes:</strong> [# Likes]</li>
-		<li><strong>Listens:</strong> [# Listens]</li>
-          </ul>
-        </div>
-        <div class="card">
-          <img
-            src="./img/placeholder_album_art.jpg"
-            alt="Album Cover"
-            style="width: 100%; border-radius: 5px;"
-          />
-		  <button class="button">Like</button>
-		  <div class="dropdown">
-			<button class="button-gray">Songs</button>
-			<div class="dropdown-content">
-				<line href="#">Song 1</line>
-				<line href="#">Song 2</line>
-				<line href="#">Song 3</line>
+      <div class="grid" style="gap: 50px">
+			<div class="card" style="width: 110%">
+			  <img
+				src="./img/placeholder_album_art.jpg"
+				alt="Album Cover"
+				style="width: 100%; border-radius: 5px;"
+			  />
+			 <div class="dropdown">
+					<button class="button">Rate</button>
+					<div class="dropdown-content">
+						<line href="#">1</line>
+						<line href="#">1.5</line>
+						<line href="#">2</line>
+						<line href="#">2.5</line>
+						<line href="#">3</line>
+						<line href="#">3.5</line>
+						<line href="#">4</line>
+						<line href="#">4.5</line>
+						<line href="#">5</line>
+					</div>
+				</div>
+				<button class="button">Like</button>
+				<button class="button-gray">Review</button>
 			</div>
-		</div>
+			<div class="card">
+			  <ul>
+				<li><strong>Album:</strong> [Album name]</li>
+				<li><strong>Artist:</strong> [Artist name]</li>
+				<li><strong>Release:</strong> [Release date]</li>
+				<li><strong>Likes:</strong> [# Likes]</li>
+				<li><strong>Listens:</strong> [# Listens]</li>
+			  </ul>
+			</div>
         </div>
-      </div>
-    </div>
+		<ul>
+				<li><strong>Song 1</strong>
+					<div class="dropdown">
+						<button class="button">Rate</button>
+						<div class="dropdown-content">
+							<line href="#">1</line>
+							<line href="#">1.5</line>
+							<line href="#">2</line>
+							<line href="#">2.5</line>
+							<line href="#">3</line>
+							<line href="#">3.5</line>
+							<line href="#">4</line>
+							<line href="#">4.5</line>
+							<line href="#">5</line>
+						</div>
+					</div>
+					<button class="button">Like</button>
+					<button class="button-gray">Review</button>
+				</li>
+				<li><strong>Song 2</strong>
+				<div class="dropdown">
+						<button class="button">Rate</button>
+						<div class="dropdown-content">
+							<line href="#">1</line>
+							<line href="#">1.5</line>
+							<line href="#">2</line>
+							<line href="#">2.5</line>
+							<line href="#">3</line>
+							<line href="#">3.5</line>
+							<line href="#">4</line>
+							<line href="#">4.5</line>
+							<line href="#">5</line>
+						</div>
+					</div>
+					<button class="button">Like</button>
+					<button class="button-gray">Review</button>
+				</li>
+				<li><strong>Song 3</strong>
+				<div class="dropdown">
+						<button class="button">Rate</button>
+						<div class="dropdown-content">
+							<line href="#">1</line>
+							<line href="#">1.5</line>
+							<line href="#">2</line>
+							<line href="#">2.5</line>
+							<line href="#">3</line>
+							<line href="#">3.5</line>
+							<line href="#">4</line>
+							<line href="#">4.5</line>
+							<line href="#">5</line>
+						</div>
+					</div>
+					<button class="button">Like</button>
+					<button class="button-gray" align="right">Review</button>
+				</li>
+			  </ul>
+     </div>
   </body>
 </html>
