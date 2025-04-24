@@ -1,0 +1,47 @@
+# Back2Bassics Project - Final Phase TODO List
+
+## ✅ Completed
+- [x] Defined database schema and views (create.sql, create_views.sql)
+- [x] Created SQLite database file via init_db.py
+- [x] Loaded all cleaned CSV data using load_csv.py
+- [x] Added error handling for duplicates in Listener.csv
+- [x] Truncated malformed rows in Follows.csv
+- [x] Skipped duplicates in Listens_To.csv
+- [x] Frontend HTML/CSS/JS complete with placeholder content
+- [x] Album placeholder image integration completed
+
+## 🟡 In Progress / Remaining
+
+### 🔧 Flask Backend (`app.py`)
+- [ ] Create Flask server using Flask + flask_cors
+- [ ] Add endpoint: GET /api/album/<album_id>
+- [ ] Add endpoint: GET /api/artist/<artist_id>
+- [ ] Add endpoint: GET /api/top-albums
+- [ ] Add endpoint: GET /api/top-artists
+- [ ] Add endpoint: GET /api/user/<tag>
+- [ ] Add optional endpoints: POST /api/like, POST /api/rate, POST /api/review
+
+### 🖥️ Frontend Integration (JS)
+- [ ] Update album.js to fetch album info using albumId from URL
+- [ ] Update artist.js to fetch artist info using artistId from URL
+- [ ] Update homepage.js to fetch and display user content
+- [ ] Dynamically populate top_100_albums.html using API data
+- [ ] Dynamically populate top_100_artists.html using API data
+
+### 🔗 Routing / Navigation
+- [ ] Update <a> tags to pass albumId/artistId via URL
+- [ ] Ensure all links route correctly to album.html or artist.html with query params
+
+### 🔒 Login & Session (Optional)
+- [ ] Mock login: store selected user Tag in localStorage
+- [ ] Real login: build POST /api/login and verify users
+
+### ❤️ Ratings, Likes, and Reviews
+- [ ] Implement like buttons using POST /api/like
+- [ ] Implement dropdown rating using POST /api/rate
+- [ ] Enable review submission using POST /api/review
+
+### 🚀 Deployment (Optional)
+- [ ] Deploy backend using Render/Fly.io/Heroku
+- [ ] Deploy frontend using Netlify or Vercel
+- [ ] Host images externally or package with frontend

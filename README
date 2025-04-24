@@ -1,0 +1,14 @@
+in one window run:
+
+python dev/backend/partC/app.py
+
+in another window run:
+
+cd dev/frontend
+python -m http.server
+
+to test in browser, goto:
+
+http://127.0.0.1:8000/album.html?albumId=1
+
+^^where 1 is the album id 

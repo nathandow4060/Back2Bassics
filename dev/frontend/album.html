@@ -4,117 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="./style.css" />
+    <script defer src="./album.js"></script>
     <title>Album</title>
   </head>
   <body>
     <div class="container">
-      <h1>Album Info</h1>
+      <h1>$ome $exy $ongs 4 U</h1>
+
       <div class="grid" style="gap: 50px">
-			<div class="card" style="width: 110%">
-			  <img
-				src="./img/placeholder_album_art.jpg"
-				alt="Album Cover"
-				style="width: 100%; border-radius: 5px;"
-			  />
-			 <div class="dropdown">
-					<button class="button">Rate</button>
-					<div class="dropdown-content">
-						<line href="#">1</line>
-						<line href="#">1.5</line>
-						<line href="#">2</line>
-						<line href="#">2.5</line>
-						<line href="#">3</line>
-						<line href="#">3.5</line>
-						<line href="#">4</line>
-						<line href="#">4.5</line>
-						<line href="#">5</line>
-					</div>
-				</div>
-				<button class="button">Like</button>
-				<button class="button-gray">Review</button>
-			</div>
-			<div class="card">
-			  <ul>
-				<li><strong>Album:</strong> [Album name]</li>
-				<li><strong>Artist:</strong> [Artist name]</li>
-				<li><strong>Release:</strong> [Release date]</li>
-				<li><strong>Likes:</strong> [# Likes]</li>
-				<li><strong>Listens:</strong> [# Listens]</li>
-			  </ul>
-			</div>
+        <!-- Album Art and Info -->
+        <div class="card" style="width: 110%">
+          <img
+            src="./img/placeholder_album_art.jpg"
+            alt="Album Cover"
+            style="width: 100%; border-radius: 5px;"
+          />
+          <ul id="album-info">
+            <!-- JavaScript will populate this -->
+          </ul>
+          <div>
+            <button class="button">Rate</button>
+            <button class="button">Like</button>
+            <button class="button-gray">Review</button>
+          </div>
         </div>
-		<ul>
-				<li><strong>Song 1</strong>
-					<div class="dropdown">
-						<button class="button">Rate</button>
-						<div class="dropdown-content">
-							<line href="#">1</line>
-							<line href="#">1.5</line>
-							<line href="#">2</line>
-							<line href="#">2.5</line>
-							<line href="#">3</line>
-							<line href="#">3.5</line>
-							<line href="#">4</line>
-							<line href="#">4.5</line>
-							<line href="#">5</line>
-						</div>
-					</div>
-					<button class="button">Like</button>
-					<button class="button-gray">Review</button>
-				</li>
-				<li><strong>Song 2</strong>
-				<div class="dropdown">
-						<button class="button">Rate</button>
-						<div class="dropdown-content">
-							<line href="#">1</line>
-							<line href="#">1.5</line>
-							<line href="#">2</line>
-							<line href="#">2.5</line>
-							<line href="#">3</line>
-							<line href="#">3.5</line>
-							<line href="#">4</line>
-							<line href="#">4.5</line>
-							<line href="#">5</line>
-						</div>
-					</div>
-					<button class="button">Like</button>
-					<button class="button-gray">Review</button>
-				</li>
-				<li><strong>Song 3</strong>
-				<div class="dropdown">
-						<button class="button">Rate</button>
-						<div class="dropdown-content">
-							<line href="#">1</line>
-							<line href="#">1.5</line>
-							<line href="#">2</line>
-							<line href="#">2.5</line>
-							<line href="#">3</line>
-							<line href="#">3.5</line>
-							<line href="#">4</line>
-							<line href="#">4.5</line>
-							<line href="#">5</line>
-						</div>
-					</div>
-					<button class="button">Like</button>
-					<button class="button-gray" align="right">Review</button>
-				</li>
-			  </ul>
-			  <!-- this is an attempt at trying to make my link in artist.html go to a different album each time, and it does work -->
-			  <!-- maybe i should try linking these in top_100_albums.html instead? -->
-			  <!-- obviously this is gonna have to be replaced once the data is able to be gathered from the backend properly-->
-			  <div id="album1">
-				<h2>Album 1</h2>
-				<p>Placeholder Text 1</p>
-			  </div>
-			  <div id="album2">
-				<h2>Album 2</h2>
-				<p>Placeholder Text 2</p>
-			  </div>
-			  <div id="album3">
-				<h2>Album 3</h2>
-				<p>Placeholder Text 3</p>
-			  </div>
-     </div>
-	 <script src="album.js"></script>
+
+        <!-- Track List -->
+        <div id="track-list">
+          <!-- JavaScript will populate this -->
+        </div>
+      </div>
+
+      <!-- Additional Album Recommendations -->
+      <div class="section">
+        <h2>Album 1</h2>
+        <p>Placeholder Text 1</p>
+        <h2>Album 2</h2>
+        <p>Placeholder Text 2</p>
+        <h2>Album 3</h2>
+        <p>Placeholder Text 3</p>
+      </div>
+    </div>
   </body>
 </html>
