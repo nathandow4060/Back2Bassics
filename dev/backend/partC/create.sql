@@ -1,12 +1,13 @@
 -- Create Users Table
 CREATE TABLE Users (
     Tag VARCHAR(50) PRIMARY KEY,
-    Username VARCHAR(50) NOT NULL
+    Username VARCHAR(50) NOT NULL,
+    Password VARCHAR(20) NOT NULL
 );
 
 -- Create Record_Label Table
 CREATE TABLE Record_Label (
-    Label_ID INT PRIMARY KEY,
+    Label_ID INTEGER PRIMARY KEY AUTOINCREMENT,
     Label_Name VARCHAR(50) NOT NULL
 );
 
@@ -49,7 +50,7 @@ CREATE TABLE Listens_To (
 
 -- Create Playlist Table
 CREATE TABLE Playlist (
-    Playlist_ID INT PRIMARY KEY,
+    Playlist_ID INTEGER PRIMARY KEY AUTOINCREMENT,
     Tag VARCHAR(50),
     Playlist_Name VARCHAR(100) NOT NULL,
     FOREIGN KEY (Tag) REFERENCES Users(Tag) ON DELETE CASCADE ON UPDATE CASCADE
@@ -57,15 +58,15 @@ CREATE TABLE Playlist (
 
 -- Create Track Table
 CREATE TABLE Track (
-    Track_ID INT PRIMARY KEY,
+    Track_ID INTEGER PRIMARY KEY AUTOINCREMENT,
     Album_ID INT,
-    Title VARCHAR(255) NOT NULL,
-    Date_Released DATE NOT NULL,
+    Title VARCHAR(100) NOT NULL,
+    Date_Released DATE,
     Genre VARCHAR(50),
-    Length TIME NOT NULL,
+    Length TIME,
     Like_Count INT DEFAULT 0,
     Avg_Rating FLOAT,
-    FOREIGN KEY (Album_ID) REFERENCES Album(Album_ID) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (Album_ID) REFERENCES Album(Album_ID) ON DELETE SET NULL
 );
 
 -- Create Added_To Table
@@ -88,7 +89,7 @@ CREATE TABLE Writes (
 
 -- Create Album Table
 CREATE TABLE Album (
-    Album_ID INT PRIMARY KEY,
+    Album_ID INTEGER PRIMARY KEY AUTOINCREMENT,
     Title VARCHAR(255) NOT NULL,
     Date_Released DATE NOT NULL,
     Like_Count INT DEFAULT 0,
@@ -98,7 +99,7 @@ CREATE TABLE Album (
 
 -- Create Interaction Table
 CREATE TABLE Interaction (
-    Interaction_ID INT PRIMARY KEY,
+    Interaction_ID INTEGER PRIMARY KEY AUTOINCREMENT,
     Tag VARCHAR(50),
     Track_ID INT,
     Album_ID INT,

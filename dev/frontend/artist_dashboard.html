@@ -1,29 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <meta charset="UTF-8">
-    <title>Artist Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Artist Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="artist_dashboard.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Artist Dashboard</h1>
-        <h2>Top 5 Most Listened Songs</h2>
-        <ul>
-            <li><a href="#">[Song Name]</a></li>
-            <li><a href="#">[Song Name]</a></li>
-            <li><a href="#">[Song Name]</a></li>
-            <li><a href="#">[Song Name]</a></li>
-            <li><a href="#">[Song Name]</a></li>
-        </ul>
-        <h2>Tags / Genre</h2>
-        <ul>
-            <li>[Genre Tag]</li>
-            <li>[Genre Tag]</li>
-            <li>[Genre Tag]</li>
-        </ul>
+  <div class="container">
+    <h1>Welcome, <span id="stage-name">[Stage Name]</span> 👋</h1>
+    <p id="label-info">Label: [Label Name]</p>
+
+    <!-- Album Management Section -->
+    <div class="card">
+      <h2>Your Albums</h2>
+      <button id="create-album-btn" class="button">➕ Create New Album</button>
+      <div id="album-list">
+        <!-- Albums will be dynamically inserted here -->
+      </div>
     </div>
+
+    <!-- Track Management Section -->
+    <div class="card">
+      <h2>Your Tracks</h2>
+      <button id="create-track-btn" class="button">➕ Create New Track</button>
+      <div id="track-list">
+        <!-- Tracks will be dynamically inserted here -->
+      </div>
+    </div>
+
+    <!-- Album Modal -->
+    <div id="album-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span class="close-btn" id="close-album-modal">&times;</span>
+          <h3>Create New Album</h3>
+      
+          <label for="album-title">Album Title:</label>
+          <input type="text" id="album-title"><br><br>
+      
+          <label for="album-date">Release Date:</label>
+          <input type="date" id="album-date"><br><br>
+      
+          <label for="track-select">Select Singles to Add:</label><br>
+          <select id="track-select" multiple style="width: 100%; height: 100px; margin-bottom: 10px;"></select><br>
+      
+          <button class="button" id="submit-album-btn">Create Album</button>
+          <button class="button-gray" id="close-album-modal">Cancel</button>
+        </div>
+    </div>
+    <!-- 🛠️ Update Album Modal -->
+    <div id="update-album-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+        <span class="close-btn" id="close-update-album-modal">&times;</span>
+        <h3>Update Album</h3>
+    
+        <label for="update-album-title">Album Title:</label>
+        <input type="text" id="update-album-title"><br><br>
+    
+        <label for="update-album-date">Release Date:</label>
+        <input type="date" id="update-album-date"><br><br>
+    
+        <label for="update-album-tracks">Uncheck to remove tracks from this album:</label><br>
+        <div id="update-album-tracks" style="margin-bottom: 10px;"></div>
+    
+        <button class="button" id="submit-update-album-btn">Save Changes</button>
+        </div>
+    </div>
+    <!-- ✅ New: Create Track Modal -->
+    <div id="track-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-btn" id="close-track-modal">&times;</span>
+        <h3>Create New Track</h3>
+  
+        <label for="track-title">Track Title:</label>
+        <input type="text" id="track-title" /><br>
+  
+        <label for="track-minutes">Length (min:sec):</label>
+        <input type="number" id="track-minutes" placeholder="Minutes" min="0" style="width: 70px;" />
+        <input type="number" id="track-seconds" placeholder="Seconds" min="0" max="59" style="width: 70px;" /><br>
+        
+        <label for="track-date">Release Date:</label>
+        <input type="date" id="track-date" /><br>
+  
+        <label for="track-album">Add to Album:</label>
+        <select id="track-album">
+        <!-- Populated in JS -->
+        </select><br><br>
+  
+        <button class="button" id="submit-track-btn">Add Track</button>
+    </div>
+  </div>
+  </div>
 </body>
 </html>
