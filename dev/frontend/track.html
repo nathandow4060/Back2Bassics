@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./track.js"></script>
+    <title>Track</title>
+  </head>
+  <body>
+	<div id="notification"></div>
+
+    <div class="container">
+	
+      <h1>Placeholder</h1>
+
+      <div class="grid" style="gap: 50px">
+        <!-- Album Art and Info -->
+        <div class="card" style="width: 110%">
+          <img
+            src="./img/placeholder_album_art.jpg"
+            alt="Track Cover"
+            style="width: 100%; border-radius: 5px;"
+          />
+          <ul id="track-info">
+            <!-- JavaScript will populate this -->
+          </ul>
+          <div>
+			<button class="button" id="track-rate-btn">Rate</button>
+			<button class="button" id="track-like-btn">Like</button>
+			<button class="button-gray" id="track-review-btn">Review</button>
+		  </div>
+        </div>
+      </div>
+
+      <!-- reviews -->
+      <div class="card">
+		<h2>Reviews</h2>
+		<div id="review-list">
+		  <!-- Reviews will load here -->
+		</div>
+	  </div>
+      <button class="button-gray" id="home-btn" style="float: right; margin-left: 10px;">
+        🏠 Home
+      </button>
+    </div>
+	<div id="rating-modal" class="modal">
+		<div class="modal-content">
+		  <span id="close-rating" class="close">&times;</span>
+		  <h3>Rate this Track</h3>
+		  <input type="range" id="rating-slider" min="0" max="5" step="1" value="3" />
+		  <p>Your Rating: <span id="rating-value">3</span></p>
+		  <button id="submit-rating" class="button">Submit Rating</button>
+		</div>
+	  </div>
+	  <div id="review-modal" class="modal">
+		<div class="modal-content">
+		  <span id="close-review" class="close">&times;</span>
+		  <h3>Write a Review</h3>
+		  <textarea id="review-text" rows="5" style="width: 100%; resize: vertical;" placeholder="Say something..."></textarea>
+		  <br /><br />
+		  <button id="submit-review" class="button">Submit Review</button>
+		</div>
+	  </div>
+  </body>
+</html>
