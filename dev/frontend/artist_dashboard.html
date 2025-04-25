@@ -14,6 +14,15 @@
         <span id="follower-count" style="font-size: 1rem; color: rgb(255, 255, 255); margin-left: 15px;">
           👥 Followers: loading...
         </span>
+        <!-- Home button -->
+        <button
+          class="button-gray"
+          id="home-btn"
+          onclick="window.location.href='./landing.html'"
+          style="float: right; margin-left: 10px;"
+        >
+          🏠 Home
+        </button>
         <button class="button-gray" id="logout-btn" style="float: right;">🚪 Log Out</button>
     </h1>
     <p id="label-info">Label: [Label Name]</p>
@@ -112,5 +121,10 @@
     <h3>Danger Zone</h3>
     <button class="button-gray" id="delete-user-btn" style="background-color: darkred;">🗑️ Delete My Account</button>
   </div>
+  <script>
+    document.getElementById("home-btn").addEventListener("click", () => {
+      window.location.href = "./landing.html";
+    });
+  </script>
 </body>
 </html>

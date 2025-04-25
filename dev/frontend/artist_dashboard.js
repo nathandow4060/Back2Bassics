@@ -13,6 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "login.html";
     });
 
+    const homeBtn = document.getElementById("home-btn");
+    if (homeBtn) {
+    homeBtn.addEventListener("click", () => {
+        window.location.href = "./landing.html";
+    });
+    }
+
     // Fetch stage name, label, and basic info
     function loadArtistInfo() {
         fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}`)

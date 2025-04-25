@@ -354,5 +354,12 @@ document.addEventListener("DOMContentLoaded", () => {
           loadPlaylists();
         });
     });
-  });
+
+    const homeBtn = document.getElementById("home-btn");
+    if (homeBtn) {
+      homeBtn.addEventListener("click", () => {
+        window.location.href = "./landing.html";
+      });
+    }
+});
   

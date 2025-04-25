@@ -22,13 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(data.error);
           } else {
             localStorage.setItem("user_tag", data.user.Tag);
-            // Future: Add role-based redirect here
-            const role = data.user.Role;
-            if (role === "artist") {
-              window.location.href = "./artist_dashboard.html";
-            } else {
-              window.location.href = "./listener_dashboard.html";
-            }
+             // Save tag & role, then go to Landing
+            localStorage.setItem("user_tag",  data.user.Tag);
+            localStorage.setItem("user_role", data.user.Role);
+            window.location.href = "./landing.html";
           }
         })
         .catch(err => {
