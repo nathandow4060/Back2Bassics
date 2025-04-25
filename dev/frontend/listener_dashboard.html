@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listener Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- Create Playlist Modal -->
+<div id="create-playlist-modal" class="modal" style="display: none;">
+  <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+    <span class="close-btn" id="close-create-modal">&times;</span>
+    <h3>Create Playlist</h3>
+
+    <label for="create-playlist-name">Playlist Name:</label>
+    <input type="text" id="create-playlist-name" placeholder="Enter playlist name" style="width: 100%; margin-bottom: 10px;" />
+
+    <h4>Add Tracks</h4>
+    <input type="text" id="create-track-search" placeholder="Search for tracks..." autocomplete="off" style="width: 100%; margin-bottom: 10px;" />
+    <div id="create-track-suggestions" style="position: absolute; background: white; color: black; border: 1px solid #ccc; z-index: 1000;"></div>
+
+    <div id="selected-tracks" style="margin-top: 15px;"></div>
+
+    <hr>
+    <button class="button" id="confirm-create-playlist">Create Playlist</button>
+    <button class="button button-gray" id="cancel-create-playlist">Cancel</button>
+  </div>
+</div>
+<body>
+  <div class="container">
+    <h1>
+        Hello, <span id="username">[username]</span> 👋 
+        <span id="listener-followers" style="font-size: 1rem; color: gray; margin-left: 15px;">👥 Followers: loading...</span>
+        <span id="listener-following" style="font-size: 1rem; color: gray; margin-left: 15px;">👣 Following: loading...</span>
+        <button class="button-gray" id="logout-btn" style="float: right;">🚪 Log Out</button>
+    </h1>
+    <p>
+        <strong>🔥 Top Artist:</strong> 
+        <span id="top-artist" style="font-weight: bold;">loading...</span>
+        <button class="button" id="edit-top-artist-btn" style="margin-left: 10px;">Edit</button>
+    </p>
+      
+    <!-- Hidden input for editing -->
+    <div id="top-artist-edit" style="display: none; margin-top: 5px;">
+        <input type="text" id="top-artist-input" placeholder="Search artist..." autocomplete="off" style="margin-right: 10px;">
+        <div id="artist-suggestions" style="position: absolute; background: white; color: black; border: 1px solid #ccc; z-index: 1000;"></div>
+        <button class="button" id="save-top-artist-btn">Save</button>
+        <button class="button button-gray" id="cancel-top-artist-btn">Cancel</button>
+    </div>
+    <div class="card" style="margin-top: 30px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <h3 style="margin: 0;">
+          🎶 Your Playlists (<span id="playlist-count">0</span>)
+        </h3>
+        <button class="button" id="open-create-modal">➕ New</button>
+      </div>
+        <ul id="playlist-list">
+          <li>Loading playlists...</li>
+        </ul>
+    </div>
+    <p>Total Tracks Listened: <span id="listen-count">loading...</span></p>
+  </div>
+  <!-- Edit Playlist Modal -->
+    <div id="edit-playlist-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+        <span class="close-btn" id="close-edit-modal">&times;</span>
+        <h3>Edit Playlist</h3>
+    
+        <label>Playlist Name:</label>
+        <input type="text" id="edit-playlist-name" style="width: 100%; margin-bottom: 10px;" />
+    
+        <h4>Tracks in Playlist</h4>
+        <div id="playlist-tracks-list">Loading...</div>
+    
+        <hr>
+        <h4>Add Track to Playlist</h4>
+        <input type="text" id="track-search-input" placeholder="Search for a track..." autocomplete="off" style="width: 100%; margin-bottom: 10px;">
+        <div id="track-suggestions" style="position: absolute; background: white; color: black; border: 1px solid #ccc; z-index: 1000;"></div>
+        <button class="button" id="add-track-btn">➕ Add Track</button>
+    
+        <hr>
+        <button class="button" id="save-playlist-btn">💾 Save Changes</button>
+        <button class="button button-gray" id="cancel-playlist-btn">Cancel</button>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+        <h3>Danger Zone</h3>
+        <button class="button-gray" id="delete-user-btn" style="background-color: darkred;">🗑️ Delete My Account</button>
+    </div>
+  <script src="listener_dashboard.js"></script>
+</body>
+</html>

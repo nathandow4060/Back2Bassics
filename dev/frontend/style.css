@@ -198,3 +198,12 @@ li {
 .close:hover {
   color: white;
 }
+
+#artist-suggestions {
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 4px;
+}
+#artist-suggestions div:hover {
+  background-color: #eee;
+}

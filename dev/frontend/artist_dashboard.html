@@ -8,8 +8,25 @@
 </head>
 <body>
   <div class="container">
-    <h1>Welcome, <span id="stage-name">[Stage Name]</span> 👋</h1>
+    <h1>
+        Welcome, 
+        <span id="stage-name">[Stage Name]</span> 👋 
+        <span id="follower-count" style="font-size: 1rem; color: rgb(255, 255, 255); margin-left: 15px;">
+          👥 Followers: loading...
+        </span>
+        <button class="button-gray" id="logout-btn" style="float: right;">🚪 Log Out</button>
+    </h1>
     <p id="label-info">Label: [Label Name]</p>
+    <div class="card">
+        <h2>Edit Your Artist Profile</h2>
+        <label for="stage-name-input">Stage Name:</label><br>
+        <input type="text" id="stage-name-input" /><br><br>
+      
+        <label for="label-name-input">Label Name:</label><br>
+        <input type="text" id="label-name-input" /><br><br>
+      
+        <button class="button" id="update-artist-profile-btn">Update Profile</button>
+      </div>
 
     <!-- Album Management Section -->
     <div class="card">
@@ -90,6 +107,10 @@
         <button class="button" id="submit-track-btn">Add Track</button>
     </div>
   </div>
+  </div>
+  <div class="card" style="margin-top: 20px;">
+    <h3>Danger Zone</h3>
+    <button class="button-gray" id="delete-user-btn" style="background-color: darkred;">🗑️ Delete My Account</button>
   </div>
 </body>
 </html>

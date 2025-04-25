@@ -8,17 +8,43 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    document.getElementById("logout-btn").addEventListener("click", () => {
+        localStorage.removeItem("user_tag");
+        window.location.href = "login.html";
+    });
+
     // Fetch stage name, label, and basic info
-    fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}`)
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("stage-name").textContent = data.stage_name;
-            document.getElementById("label-info").textContent = `Label: ${data.label_name || "Unknown"}`;
-        })
-        .catch(err => {
-            console.error("❌ Failed to load dashboard info:", err);
-            alert("Error loading artist dashboard info.");
-        });
+    function loadArtistInfo() {
+        fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("stage-name").textContent = data.stage_name;
+                document.getElementById("label-info").textContent = `Label: ${data.label_name || "Unknown"}`;
+    
+                // Populate inputs for editing
+                document.getElementById("stage-name-input").value = data.stage_name;
+                document.getElementById("label-name-input").value = data.label_name || "";
+            })
+            .catch(err => {
+                console.error("❌ Failed to load dashboard info:", err);
+                alert("Error loading artist dashboard info.");
+            });
+    }
+
+    function loadFollowerCount() {
+        fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}/followers`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("follower-count").textContent = `👥 Followers: ${data.follower_count}`;
+            })
+            .catch(err => {
+                console.error("❌ Failed to load follower count:", err);
+                document.getElementById("follower-count").textContent = "👥 Followers: error";
+            });
+    }
+
+    loadArtistInfo(); 
+    loadFollowerCount();
 
     // Fetch albums and tracks
     function loadAlbumsAndTracks() {
@@ -333,6 +359,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    document.getElementById("update-artist-profile-btn").addEventListener("click", () => {
+        const stageName = document.getElementById("stage-name-input").value;
+        const labelName = document.getElementById("label-name-input").value;
+    
+        fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}/update-profile`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                stage_name: stageName,
+                label_name: labelName
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.error) {
+                alert("Error: " + response.error);
+                return;
+            }
+            alert("✅ Profile updated!");
+            loadArtistInfo(); // Optional: refresh the name and label display
+        })
+        .catch(err => {
+            console.error("🚫 Failed to update profile:", err);
+            alert("Something went wrong while updating your profile.");
+        });
+    });
+
     // ========= Update Track Modal Logic ========= //
     let currentEditTrackId = null;
 
@@ -479,6 +532,28 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("close-update-album-modal").addEventListener("click", () => {
         document.getElementById("update-album-modal").style.display = "none";
+    });
+
+    document.getElementById("delete-user-btn").addEventListener("click", () => {
+        if (confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) {
+            fetch(`http://127.0.0.1:5000/api/artist-dashboard/${encodeURIComponent(userTag)}/delete-user`, {
+                method: "DELETE"
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.error) {
+                    alert("Error: " + response.error);
+                    return;
+                }
+                alert("Your account has been deleted.");
+                localStorage.removeItem("user_tag");
+                window.location.href = "login.html";
+            })
+            .catch(err => {
+                console.error("🚫 Failed to delete user:", err);
+                alert("Something went wrong while deleting your account.");
+            });
+        }
     });
 });
 

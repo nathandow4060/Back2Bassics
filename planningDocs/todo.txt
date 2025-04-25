@@ -1,47 +1,52 @@
-# Back2Bassics Project - Final Phase TODO List
+# TODO List for Back2Bassics Project
 
-## ✅ Completed
-- [x] Defined database schema and views (create.sql, create_views.sql)
-- [x] Created SQLite database file via init_db.py
-- [x] Loaded all cleaned CSV data using load_csv.py
-- [x] Added error handling for duplicates in Listener.csv
-- [x] Truncated malformed rows in Follows.csv
-- [x] Skipped duplicates in Listens_To.csv
-- [x] Frontend HTML/CSS/JS complete with placeholder content
-- [x] Album placeholder image integration completed
+## Essential Remaining Features
 
-## 🟡 In Progress / Remaining
+1. 🔍 Explore/Home Page
+   - Include search bar for artists, albums, and tracks
+   - Show Top 100 Songs, Albums, and Artists (based on likes/ratings/interactions)
+   - Use tables: Track, Album, Artist, Interaction, Listens_To, Likes, Rating
 
-### 🔧 Flask Backend (`app.py`)
-- [ ] Create Flask server using Flask + flask_cors
-- [ ] Add endpoint: GET /api/album/<album_id>
-- [ ] Add endpoint: GET /api/artist/<artist_id>
-- [ ] Add endpoint: GET /api/top-albums
-- [ ] Add endpoint: GET /api/top-artists
-- [ ] Add endpoint: GET /api/user/<tag>
-- [ ] Add optional endpoints: POST /api/like, POST /api/rate, POST /api/review
+2. 💬 Public Artist Page
+   - Read-only view of an artist's profile, albums, tracks, and stats
+   - Use tables: Artist, Album, Track, Writes, Listens_To, Follows
 
-### 🖥️ Frontend Integration (JS)
-- [ ] Update album.js to fetch album info using albumId from URL
-- [ ] Update artist.js to fetch artist info using artistId from URL
-- [ ] Update homepage.js to fetch and display user content
-- [ ] Dynamically populate top_100_albums.html using API data
-- [ ] Dynamically populate top_100_artists.html using API data
+3. 🎵 Track Page (like Album Page)
+   - Like, rate, and review a specific track
+   - Use tables: Track, Interaction, Like, Rating, Review, Writes
 
-### 🔗 Routing / Navigation
-- [ ] Update <a> tags to pass albumId/artistId via URL
-- [ ] Ensure all links route correctly to album.html or artist.html with query params
+4. ➕ Follow System UI
+   - Add follow/unfollow buttons to artist and listener profiles
+   - Use table: Follows
 
-### 🔒 Login & Session (Optional)
-- [ ] Mock login: store selected user Tag in localStorage
-- [ ] Real login: build POST /api/login and verify users
 
-### ❤️ Ratings, Likes, and Reviews
-- [ ] Implement like buttons using POST /api/like
-- [ ] Implement dropdown rating using POST /api/rate
-- [ ] Enable review submission using POST /api/review
+## Additional Feature Ideas
 
-### 🚀 Deployment (Optional)
-- [ ] Deploy backend using Render/Fly.io/Heroku
-- [ ] Deploy frontend using Netlify or Vercel
-- [ ] Host images externally or package with frontend
+5. 🏆 Top 100 Tracks/Albums Page
+   - Based on average rating or like count
+   - Use tables: Track, Album, Rating, Likes
+
+6. 🧑‍🤝‍🧑 User Directory / Social Discovery
+   - Browse list of users and follow them
+   - Use tables: Users, Listener, Playlist, Follows
+
+7. 📊 Listener Stats Page
+   - Show top artist, top genres, total listening time, etc.
+   - Use tables: Interaction, Listens_To, Listener, Track
+
+8. 📆 Release Calendar (Optional)
+   - List of upcoming album releases
+   - Use table: Album
+
+9. 📁 Saved Albums/Tracks (Optional)
+   - Feature to save music separately from reviews/likes
+   - Requires a new table (if implemented)
+
+
+## Notes
+
+- All core entities are already used: User, Listener, Artist, Album, Track
+- Relationship tables in use: Writes, Added_To, Listens_To, Follows, Interaction
+- Interaction types covered: Like, Rating, Review
+
+Next up: Start building the homepage and search feature.

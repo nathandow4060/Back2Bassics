@@ -329,3 +329,107 @@ def delete_album(tag, album_id):
 
     finally:
         conn.close()
+
+@artist_bp.route("/artist-dashboard/<tag>/update-profile", methods=["PUT"])
+def update_artist_profile(tag):
+    tag = unquote(tag)
+    data = request.json
+    new_name = data.get("stage_name")
+    new_label_name = data.get("label_name")
+
+    if not new_name:
+        return jsonify({"error": "Stage name is required."}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        label_id = None
+        if new_label_name:
+            # Try to get label by name
+            result = cursor.execute("SELECT Label_ID FROM Record_Label WHERE Label_Name = ?", (new_label_name,)).fetchone()
+            if result:
+                label_id = result["Label_ID"]
+            else:
+                # Insert label if it doesn't exist
+                cursor.execute("INSERT INTO Record_Label (Label_Name) VALUES (?)", (new_label_name,))
+                label_id = cursor.lastrowid
+
+        # Update the artist info
+        cursor.execute("""
+            UPDATE Artist SET Stage_Name = ?, Label_ID = ? WHERE Tag = ?
+        """, (new_name, label_id, tag))
+
+        conn.commit()
+        return jsonify({"message": "Artist profile updated."}), 200
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
+
+@artist_bp.route("/artist-dashboard/<tag>/followers", methods=["GET"])
+def get_follower_count(tag):
+    tag = unquote(tag)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        result = cursor.execute(
+            "SELECT COUNT(*) AS count FROM Follows WHERE Followed_Tag = ?",
+            (tag,)
+        ).fetchone()
+        return jsonify({"follower_count": result["count"]}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
+
+@artist_bp.route("/artist-dashboard/<tag>/delete-user", methods=["DELETE"])
+def delete_user(tag):
+    tag = unquote(tag)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        # 🔐 1. Ensure @uncredited user & artist exists
+        cursor.execute("""
+            INSERT OR IGNORE INTO Users (Tag, Username, Password)
+            VALUES ('@uncredited', 'uncredited', 'placeholder')
+        """)
+        cursor.execute("""
+            INSERT OR IGNORE INTO Artist (Tag, Stage_Name)
+            VALUES ('@uncredited', 'Songs/Albums without Artists')
+        """)
+
+        # 🛠️ 2. Reassign all tracks by this artist to @uncredited
+        cursor.execute("""
+            UPDATE Writes SET Artist_Tag = '@uncredited' WHERE Artist_Tag = ?
+        """, (tag,))
+
+        # 🎯 3. Remove artist record (but not tracks/albums)
+        cursor.execute("DELETE FROM Artist WHERE Tag = ?", (tag,))
+
+        # 💬 4. Remove user-generated data
+        cursor.execute("DELETE FROM Listener WHERE Tag = ?", (tag,))
+        cursor.execute("DELETE FROM Follows WHERE Follower_Tag = ? OR Followed_Tag = ?", (tag, tag))
+        cursor.execute("DELETE FROM Playlist WHERE Tag = ?", (tag,))
+        cursor.execute("DELETE FROM Interaction WHERE Tag = ?", (tag,))
+
+        # ✅ 5. Remove user account
+        cursor.execute("DELETE FROM Users WHERE Tag = ?", (tag,))
+
+        conn.commit()
+        return jsonify({"message": "Account deleted and tracks reassigned to @uncredited."}), 200
+
+    except Exception as e:
+        conn.rollback()
+        print("Error deleting user:", e)
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()

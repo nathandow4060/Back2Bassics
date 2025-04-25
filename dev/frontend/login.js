@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Future: Add role-based redirect here
             const role = data.user.Role;
             if (role === "artist") {
-                window.location.href = "./artist_dashboard.html";
+              window.location.href = "./artist_dashboard.html";
             } else {
-                window.location.href = "./homepage.html";
+              window.location.href = "./listener_dashboard.html";
             }
           }
         })
