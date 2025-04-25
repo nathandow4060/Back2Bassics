@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Back2Bassics Landing</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .search-container {
+      text-align: center;
+      margin: 80px auto 40px;
+    }
+    .search-container input {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      width: 50%;
+      max-width: 600px;
+      border-radius: 25px;
+      border: none;
+    }
+    .trending-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .trending-section {
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+    .trending-section h2 {
+      text-align: center;
+    }
+    .list {
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 0 10px;
+    }
+    .list li {
+      padding: 6px 0;
+      border-bottom: 1px solid #333;
+    }
+    .list a {
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="nav">
+      <h1>Back2Bassics</h1>
+      <div>
+        <a href="#" id="profile-btn" class="button">Profile</a>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <input id="search-input" type="text"
+             placeholder="Search for tracks, albums, artists, or users…" autocomplete="off" />
+      <div id="suggestions" class="suggestions"></div>
+    </div>
+
+    <div class="trending-wrapper">
+      <div class="trending-section">
+        <h2>🔥 Top 50 Songs</h2>
+        <ol class="list" id="top-songs">
+          <li>Loading...</li>
+        </ol>
+      </div>
+
+      <div class="trending-section">
+        <h2>🌟 Top 50 Artists</h2>
+        <ol class="list" id="top-artists">
+          <li>Loading...</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="landing.js"></script>
+</body>
+</html>
