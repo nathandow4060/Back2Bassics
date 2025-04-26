@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     trackSearchInput.addEventListener("input", () => {
-    const query = createTrackSearchInput.value.trim();
+    const query = trackSearchInput.value.trim();
     if (!query) {
         trackSuggestionsBox.innerHTML = "";
         return;

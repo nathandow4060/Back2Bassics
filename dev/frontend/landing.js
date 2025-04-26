@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = `album.html?albumId=${item.id}`;
                 break;
               case "artists":
-                window.location.href = `artist_dashboard.html?tag=${item.id}`;
+                window.location.href = `viewer_dashboard.html?tag=${item.id}`;
                 break;
               case "users":
                 window.location.href = `listener_dashboard.html?user=${item.id}`;

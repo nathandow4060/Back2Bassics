@@ -438,8 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("update-track-title").value = track.title;
     
         // ✅ Extract the date part if there's a timestamp
-        const formattedDate = track.date_released.split("T")[0];
-        document.getElementById("update-track-date").value = formattedDate;
+        //const formattedDate = track.date_released.split("T")[0];
+        //document.getElementById("update-track-date").value = formattedDate;
     
         document.getElementById("update-track-genre").value = track.genre || "";
     
