@@ -22,24 +22,20 @@
         >
           🏠 Home
         </button>
-        <button class="button-gray" id="logout-btn" style="float: right;">🚪 Log Out</button>
     </h1>
     <p id="label-info">Label: [Label Name]</p>
     <div class="card">
-        <h2>Edit Your Artist Profile</h2>
+        <h2>Artist Profile</h2>
         <label for="stage-name-input">Stage Name:</label><br>
         <input type="text" id="stage-name-input" /><br><br>
       
         <label for="label-name-input">Label Name:</label><br>
         <input type="text" id="label-name-input" /><br><br>
-      
-        <button class="button" id="update-artist-profile-btn">Update Profile</button>
       </div>
 
     <!-- Album Management Section -->
     <div class="card">
-      <h2>Your Albums</h2>
-      <button id="create-album-btn" class="button">➕ Create New Album</button>
+      <h2>Albums</h2>
       <div id="album-list">
         <!-- Albums will be dynamically inserted here -->
       </div>
@@ -47,36 +43,12 @@
 
     <!-- Track Management Section -->
     <div class="card">
-      <h2>Your Tracks</h2>
-      <button id="create-track-btn" class="button">➕ Create New Track</button>
+      <h2>Tracks</h2>
       <div id="track-list">
         <!-- Tracks will be dynamically inserted here -->
       </div>
     </div>
-
-    <!-- Album Modal -->
-    <div id="album-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <span class="close-btn" id="close-album-modal">&times;</span>
-          <h3>Create New Album</h3>
-      
-          <label for="album-title">Album Title:</label>
-          <input type="text" id="album-title"><br><br>
-      
-          <label for="album-date">Release Date:</label>
-          <input type="date" id="album-date"><br><br>
-      
-          <label for="track-select">Select Singles to Add:</label><br>
-          <select id="track-select" multiple style="width: 100%; height: 100px; margin-bottom: 10px;"></select><br>
-      
-          <button class="button" id="submit-album-btn">Create Album</button>
-          <button class="button-gray" id="close-album-modal">Cancel</button>
-        </div>
-    </div>
     
-    <h3>Danger Zone</h3>
-    <button class="button-gray" id="delete-user-btn" style="background-color: darkred;">🗑️ Delete My Account</button>
-  </div>
   <script>
     document.getElementById("home-btn").addEventListener("click", () => {
       window.location.href = "./landing.html";
