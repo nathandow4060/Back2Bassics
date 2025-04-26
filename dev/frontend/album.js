@@ -7,6 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    const Homebutton = document.getElementById("home-btn");
+    if (Homebutton) {
+        Homebutton.addEventListener("click", () => {
+            console.log("🏠 Home button clicked!");
+            window.location.href = "landing.html";
+        });
+    }
+
     // Fetch album details
     fetch(`http://127.0.0.1:5000/api/album/${albumId}`)
         .then(res => res.json())
@@ -34,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`http://127.0.0.1:5000/api/album/${albumId}/tracks`)
         .then(res => res.json())
         .then(tracks => {
+            console.log("🎵 TRACKS RECEIVED:", tracks);
+
+
             const trackListContainer = document.querySelector("#track-list");
             trackListContainer.innerHTML = ""; // Clear existing placeholders
 
@@ -49,11 +60,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     formattedLength = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                 }
 
-                trackEl.innerHTML = `
-                    <div style="margin-bottom: 10px;">
-                        <strong>${track.Title}</strong> <span style="color: gray;">(${formattedLength})</span>
-                    </div>
+                console.log(track);
+
+                trackEl.innerHTML = /* html */ `
+                <div style="margin-bottom: 10px;">
+                    <a href="track.html?trackId=${track.Track_ID}" style="text-decoration: none; color: inherit;">
+                    <strong>${track.Title}</strong>
+                    </a> 
+                    <span style="color: gray;">(${formattedLength})</span>
+                </div>
                 `;
+                
                 trackListContainer.appendChild(trackEl);
             });
         })

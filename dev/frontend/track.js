@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     //const albumId = params.get("albumID");
-    const trackId = params.get("id");
+    const trackId = params.get("trackId");
 
     if (!trackId) {
         console.error("Missing trackId in URL");

@@ -7,6 +7,7 @@ from routes.listener import listener_bp
 from routes.landing import landing_bp 
 from routes.search  import search_bp
 from routes.tracks import tracks_bp
+from routes.follows import follows_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +20,7 @@ app.register_blueprint(listener_bp)
 app.register_blueprint(landing_bp) 
 app.register_blueprint(search_bp)
 app.register_blueprint(tracks_bp)
+app.register_blueprint(follows_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

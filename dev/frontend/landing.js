@@ -27,11 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
       list.innerHTML = "";
       data.forEach((song, i) => {
         const li = document.createElement("li");
-        li.innerHTML = `
-          <a href="#">
-            ${i + 1}. ${song.track_name} — ${song.artist_name}
-            (${song.likes} likes)
-          </a>`;
+        const a = document.createElement("a");
+      
+        a.href = `track.html?trackId=${song.track_id}`;
+        a.textContent = `${i + 1}. ${song.track_name} — ${song.artist_name} (${song.likes} likes)`;
+      
+        li.appendChild(a);
         list.appendChild(li);
       });
     })
@@ -57,11 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
       list.innerHTML = "";
       data.forEach((artist, i) => {
         const li = document.createElement("li");
-        li.innerHTML = `
-          <a href="#">
-            ${i + 1}. ${artist.artist_name}
-            (${artist.followers} followers)
-          </a>`;
+        const a = document.createElement("a");
+      
+        a.href = `artist_view.html?tag=${artist.artist_id}`;
+        a.textContent = `${i + 1}. ${artist.artist_name} (${artist.followers} followers)`;
+      
+        li.appendChild(a);
         list.appendChild(li);
       });
     })
@@ -119,16 +121,16 @@ document.addEventListener("DOMContentLoaded", () => {
           li.onclick = () => {
             switch(cat) {
               case "tracks":
-                window.location.href = `track.html?id=${item.id}`;
+                window.location.href = `track.html?trackId=${item.id}`;
                 break;
               case "albums":
                 window.location.href = `album.html?albumId=${item.id}`;
                 break;
               case "artists":
-                window.location.href = `artist_dashboard.html?tag=${item.id}`;
+                window.location.href = `artist_view.html?tag=${item.id}`;
                 break;
               case "users":
-                window.location.href = `listener_dashboard.html?user=${item.id}`;
+                window.location.href = `listener_view.html?user=${item.id}`;
                 break;
             }
           };

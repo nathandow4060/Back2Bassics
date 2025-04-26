@@ -51,8 +51,12 @@
 
     <div class="nav">
       <h1>Back2Bassics</h1>
-      <div>
+      <div style="display: flex; gap: 10px;">
         <a href="#" id="profile-btn" class="button">Profile</a>
+        <a href="login.html" class="button"
+           onclick="localStorage.removeItem('user_tag'); localStorage.removeItem('user_role');">
+          Logout
+        </a>
       </div>
     </div>
 
