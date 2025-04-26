@@ -222,32 +222,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     trackSearchInput.addEventListener("input", () => {
-    const query = createTrackSearchInput.value.trim();
-    if (!query) {
-        trackSuggestionsBox.innerHTML = "";
-        return;
-    }
-
-    fetch(`http://127.0.0.1:5000/api/search-tracks?q=${encodeURIComponent(query)}`)
-        .then(res => res.json())
-        .then(results => {
-        trackSuggestionsBox.innerHTML = "";
-        if (results.length === 0) return;
-
-        results.forEach(track => {
-            const option = document.createElement("div");
-            option.style.padding = "8px";
-            option.style.cursor = "pointer";
-            option.textContent = `${track.Title} (${track.Length})`;
-            option.addEventListener("click", () => {
-            addTrackToPlaylist(track.Track_ID);
-            createTrackSearchInput.value = "";
-            createTrackSuggestionsBox.innerHTML = "";
-            });
-            createTrackSuggestionsBox.appendChild(option);
-        });
-        });
-    });
+      const query = trackSearchInput.value.trim();
+      if (!query) {
+          trackSuggestionsBox.innerHTML = "";
+          return;
+      }
+  
+      fetch(`http://127.0.0.1:5000/api/search-tracks?q=${encodeURIComponent(query)}`)
+          .then(res => res.json())
+          .then(results => {
+              trackSuggestionsBox.innerHTML = "";
+              if (results.length === 0) return;
+  
+              results.forEach(track => {
+                  const option = document.createElement("div");
+                  option.style.padding = "8px";
+                  option.style.cursor = "pointer";
+                  option.textContent = `${track.Title} (${track.Length})`;
+                  option.addEventListener("click", () => {
+                      addTrackToPlaylist(track.Track_ID);
+                      trackSearchInput.value = ""; // <-- also make sure you clear the correct input
+                      trackSuggestionsBox.innerHTML = "";
+                  });
+                  trackSuggestionsBox.appendChild(option);
+              });
+          });
+  });
 
     function addTrackToPlaylist(trackId) {
     fetch(`http://127.0.0.1:5000/api/listener-dashboard/${encodeURIComponent(userTag)}/playlist/${currentEditingPlaylistId}/add-track`, {
@@ -321,11 +321,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 selectedTracksDisplay.appendChild(tag);
               }
               createTrackSuggestionsBox.innerHTML = "";
-              createTrackSearchInput.value = "";
+              createTrackInputSearch.value = "";
             });
             createTrackSuggestionsBox.appendChild(option);
           });
-        });
+      });
     });
 
     document.addEventListener("click", e => {
