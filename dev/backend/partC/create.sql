@@ -128,3 +128,6 @@ CREATE TABLE Rating (
     Rating_Value FLOAT NOT NULL CHECK (Rating_Value BETWEEN 0.0 AND 10.0),
     FOREIGN KEY (Interaction_ID) REFERENCES Interaction(Interaction_ID) ON DELETE CASCADE
 );
+
+-- Alter Album to add new column for album art
+ALTER TABLE Album ADD COLUMN Spotify_Album_Art_URL TEXT;

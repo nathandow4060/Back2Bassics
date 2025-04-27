@@ -37,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li><strong>Likes:</strong> ${data.Like_Count}</li>
                 <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
             `;
+
+            // ✅ Update album cover image
+            const albumImage = document.querySelector("img[alt='Album Cover']");
+            if (albumImage && data.Image_URL) {
+                albumImage.src = data.Image_URL;
+            }
         })
         .catch(err => console.error("Failed to fetch album info:", err));
 
