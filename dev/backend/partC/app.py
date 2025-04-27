@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+
 from routes.albums import albums_bp
 from routes.auth import auth_bp
 from routes.artist import artist_bp
@@ -10,9 +11,11 @@ from routes.tracks import tracks_bp
 from routes.follows import follows_bp
 
 app = Flask(__name__)
-CORS(app)
 
-# Register routes
+# ✅ CORS must be applied *immediately after* app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:8000", "http://localhost:8000"]}})
+
+# ✅ THEN register your routes
 app.register_blueprint(albums_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(artist_bp)

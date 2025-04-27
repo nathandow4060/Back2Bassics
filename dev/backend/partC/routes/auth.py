@@ -1,7 +1,11 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import CORS  # ✅ ADD this
 from db import get_db_connection
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api")
+
+# ✅ Apply CORS directly to auth_bp
+CORS(auth_bp, resources={r"/*": {"origins": ["http://127.0.0.1:8000", "http://localhost:8000"]}})
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
@@ -44,9 +48,6 @@ def login():
         }
     })
 
-
-
-# --- signup logic ---
 @auth_bp.route("/signup", methods=["POST"])
 def signup():
     data = request.json

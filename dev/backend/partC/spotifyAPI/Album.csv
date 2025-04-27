@@ -1,4 +1,4 @@
-Album_ID,Title,Date_Released,Like_Count,Avg_Rating,Num_Tracks
+Album_ID,Title,Date_Released,Like_Count,Avg_Rating,Num_Tracks, Spotify_Album_Art_URL
 1,$ome $exy $ongs 4 U,2025-02-14,0,,10
 2,For All The Dogs Scary Hours Edition,2023-11-17,0,,10
 3,THE TORTURED POETS DEPARTMENT: THE ANTHOLOGY,2024-04-19,0,,10

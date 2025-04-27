@@ -1,5 +1,33 @@
+import requests
 from flask import Blueprint, jsonify, request
 from db import get_db_connection
+
+# Spotify Setup
+SPOTIFY_ACCESS_TOKEN = 'BQBCXIuqqBJUomJ9D71mXKtlP7X3BHQp5KD1VtFVhgnJuPf-ISNHmkqEGwaXsaXb3NMXT9M6YgP-eBpsdB0tlHqbJTmFvatHbqj0i5laGWZ-4QDY6K_Z1GunAD-W16Igf1GPTbLPQMc'
+
+def fetch_album_image(album_name):
+    headers = {
+        "Authorization": f"Bearer {SPOTIFY_ACCESS_TOKEN}"
+    }
+    params = {
+        "q": album_name,
+        "type": "album",
+        "limit": 1
+    }
+    response = requests.get("https://api.spotify.com/v1/search", headers=headers, params=params)
+
+    if response.status_code != 200:
+        print("❌ Spotify API error:", response.text)
+        return None
+
+    data = response.json()
+    albums = data.get('albums', {}).get('items', [])
+
+    if not albums:
+        print(f"⚠️ No Spotify album found for: {album_name}")
+        return None
+
+    return albums[0]['images'][0]['url']
 
 albums_bp = Blueprint("albums", __name__, url_prefix="/api")
 
@@ -36,17 +64,33 @@ def get_album(album_id):
         LIMIT 1
     ''', (album_id,)).fetchone()
 
-    conn.close()
-
     if album is None:
+        conn.close()
         return jsonify({"error": "Album not found"}), 404
 
     album_data = dict(album)
+
+    # ✅ Try to get cached image
+    if album_data.get("Spotify_Image_URL"):
+        album_image_url = album_data["Spotify_Image_URL"]
+    else:
+        # 🛑 If not cached, fetch from Spotify
+        album_image_url = fetch_album_image(album["Title"])
+
+        # ✅ Cache the result if we find one
+        if album_image_url:
+            cursor.execute("UPDATE Album SET Spotify_Image_URL = ? WHERE Album_ID = ?", (album_image_url, album_id))
+            conn.commit()
+        else:
+            album_image_url = "/img/placeholder_album_art.jpg"
+
     album_data["Like_Count"] = like_count
     album_data["Avg_Rating"] = avg_rating
     album_data["Num_Tracks"] = track_count
     album_data["Artist_Tag"] = artist_tag["Artist_Tag"] if artist_tag else None
+    album_data["Image_URL"] = album_image_url  # 🔥 Send image URL back to frontend
 
+    conn.close()
     return jsonify(album_data)
 
 @albums_bp.route("/album/<int:album_id>/tracks", methods=["GET"])

@@ -14,26 +14,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch track details
     fetch(`http://127.0.0.1:5000/api/track/${trackId}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                console.error("API Error:", data.error);
-                return;
-            }
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            console.error("API Error:", data.error);
+            return;
+        }
 
-            // Update the header title
-            document.querySelector("h1").textContent = data.Title || "Track";
+        // Update the header title
+        document.querySelector("h1").textContent = data.Title || "Track";
 
-            // Update track info section
-            document.querySelector("#track-info").innerHTML = `
-                <li><strong>Track:</strong> ${data.Title}</li>
-                <li><strong>Artist:</strong> ${data.Artist_Tag || 'Unknown'}</li>
-                <li><strong>Release:</strong> ${data.Date_Released}</li>
-                <li><strong>Likes:</strong> ${data.Like_Count}</li>
-                <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
-            `;
-        })
-        .catch(err => console.error("Failed to fetch track info:", err));
+        // Update track info section
+        document.querySelector("#track-info").innerHTML = `
+            <li><strong>Track:</strong> ${data.Title}</li>
+            <li><strong>Artist:</strong> ${data.Artist_Tag || 'Unknown'}</li>
+            <li><strong>Release:</strong> ${data.Date_Released}</li>
+            <li><strong>Likes:</strong> ${data.Like_Count}</li>
+            <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
+        `;
+
+        // ✅ Now that we have track data, immediately fetch album info
+        if (data.Album_ID) {
+            fetch(`http://127.0.0.1:5000/api/album/${data.Album_ID}`)
+                .then(res => res.json())
+                .then(albumData => {
+                    if (albumData.error) {
+                        console.error("Album API Error:", albumData.error);
+                        return;
+                    }
+
+                    // ✅ Update album cover image
+                    const albumImage = document.querySelector("img[alt='Album Cover']");
+                    if (albumImage && albumData.Image_URL) {
+                        albumImage.src = albumData.Image_URL;
+                    }
+                })
+                .catch(err => console.error("Failed to fetch album info:", err));
+        }
+    })
+    .catch(err => console.error("Failed to fetch track info:", err));
 
         /*
     // Fetch track tracks
