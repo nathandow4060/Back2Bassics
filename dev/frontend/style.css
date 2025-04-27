@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway");
 .search-container {
   position: relative;
   z-index: 10;   /* sits above the main content */
@@ -40,7 +41,7 @@
 }
 
 body {
-  background-color: black;
+  background-color: #252020;
   color: white;
   font-family: Arial, sans-serif;
   padding: 0 24px;
@@ -51,12 +52,12 @@ body {
 }
 
 a {
-  color: #00aaff;
+  color: #447a9c;
   text-decoration: none;
 }
 
 .button {
-  background-color: #00aaff;
+  background-color: #447a9c;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -118,7 +119,8 @@ a {
 }
 
 h1, h2 {
-  color: #00aaff;
+  color: #e63746;
+  font-family: Raleway;
 }
 
 ul {
@@ -149,7 +151,7 @@ li {
 }
 
 .card {
-  background-color: #111;
+  background-color: #3b323238;
   padding: 15px;
   border-radius: 5px;
 }
@@ -167,7 +169,7 @@ li {
   text-align: left;
   display: inline-block;
   border-style: solid;
-  border-color: #00aaff;
+  border-color: #447a9c;
   padding: 10px;
 }
 
