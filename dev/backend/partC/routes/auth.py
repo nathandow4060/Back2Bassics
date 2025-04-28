@@ -11,7 +11,7 @@ CORS(auth_bp, resources={r"/*": {"origins": ["http://127.0.0.1:8000", "http://lo
 def login_unsafe():
     data = request.json
     tag = data.get("tag")
-    password = data.get("password")
+    password = data.get("password")  # Still receive but don't check
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -22,13 +22,9 @@ def login_unsafe():
 
     if user is None:
         conn.close()
-        return jsonify({"error": "User not found"}), 404
+        return jsonify({"error": "Login failed"}), 401  # Generic error
 
-    if user["Password"] != password:
-        conn.close()
-        return jsonify({"error": "Incorrect password"}), 401
-
-    # Determine user role (artist or listener)
+    # Determine user role
     role = None
     if cursor.execute("SELECT 1 FROM Artist WHERE Tag = ?", (tag,)).fetchone():
         role = "artist"
@@ -45,7 +41,7 @@ def login_unsafe():
             "Role": role
         }
     })
-
+    
 @auth_bp.route("/signup", methods=["POST"])
 def signup():
     data = request.json
