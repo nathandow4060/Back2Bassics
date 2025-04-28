@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 from db import get_db_connection
 
 # Spotify Setup
-SPOTIFY_ACCESS_TOKEN = 'BQBCXIuqqBJUomJ9D71mXKtlP7X3BHQp5KD1VtFVhgnJuPf-ISNHmkqEGwaXsaXb3NMXT9M6YgP-eBpsdB0tlHqbJTmFvatHbqj0i5laGWZ-4QDY6K_Z1GunAD-W16Igf1GPTbLPQMc'
+SPOTIFY_ACCESS_TOKEN = 'BQATiU4fuDhcogwEPzbTIfV59WAtaptIr3MH-DfNWvx98xnUOYzlcYJzi-ELXsSEJVo8TMdD3U5fASxoDKigx082OHMOYEQv_OsZpPKhqQYP4rIRKgM96Am3IVvumBCi1DzqZyAVF8w'
 
 def fetch_album_image(album_name):
     headers = {
