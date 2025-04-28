@@ -1,9 +1,59 @@
 import requests
+import os
 from flask import Blueprint, jsonify, request
 from db import get_db_connection
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 # Spotify Setup
-SPOTIFY_ACCESS_TOKEN = 'BQATiU4fuDhcogwEPzbTIfV59WAtaptIr3MH-DfNWvx98xnUOYzlcYJzi-ELXsSEJVo8TMdD3U5fASxoDKigx082OHMOYEQv_OsZpPKhqQYP4rIRKgM96Am3IVvumBCi1DzqZyAVF8w'
+SPOTIFY_ACCESS_TOKEN = None
+
+def refresh_spotify_access_token():
+    global SPOTIFY_ACCESS_TOKEN
+
+    print("🔄 Refreshing Spotify access token...")
+
+    response = requests.post(
+        "https://accounts.spotify.com/api/token",
+        data={
+            "grant_type": "client_credentials"
+        },
+        auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET)
+    )
+
+    if response.status_code == 200:
+        SPOTIFY_ACCESS_TOKEN = response.json()["access_token"]
+        print("✅ New access token fetched successfully.")
+    else:
+        print(f"❌ Failed to refresh Spotify token: {response.text}")
+        raise Exception("Failed to refresh Spotify access token.")
+
+# Refresh the token when the app starts
+refresh_spotify_access_token()
+
+def spotify_get(url, params=None):
+    global SPOTIFY_ACCESS_TOKEN
+
+    headers = {
+        "Authorization": f"Bearer {SPOTIFY_ACCESS_TOKEN}"
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 401:
+        print("⚠️ Access token expired. Refreshing...")
+        refresh_spotify_access_token()
+
+        # Retry the request with new token
+        headers["Authorization"] = f"Bearer {SPOTIFY_ACCESS_TOKEN}"
+        response = requests.get(url, headers=headers, params=params)
+
+    return response
+
 
 def fetch_album_image(album_name):
     headers = {
