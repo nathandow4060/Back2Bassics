@@ -8,19 +8,17 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api")
 CORS(auth_bp, resources={r"/*": {"origins": ["http://127.0.0.1:8000", "http://localhost:8000"]}})
 
 @auth_bp.route("/login", methods=["POST"])
-def login():
+def login_unsafe():
     data = request.json
     tag = data.get("tag")
     password = data.get("password")
 
-    if not tag or not password:
-        return jsonify({"error": "Missing tag or password"}), 400
-
     conn = get_db_connection()
     cursor = conn.cursor()
-
-    # Check if user exists
-    user = cursor.execute("SELECT * FROM Users WHERE Tag = ?", (tag,)).fetchone()
+    
+    # Vulnerable SQL concatenation
+    query = f"SELECT * FROM Users WHERE Tag = '{tag}' AND Password = '{password}'"
+    user = cursor.execute(query).fetchone()
 
     if user is None:
         conn.close()
