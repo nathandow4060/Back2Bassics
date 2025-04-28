@@ -330,43 +330,32 @@ def delete_album(tag, album_id):
     finally:
         conn.close()
 
+# Hacked' WHERE '1'='1' -- Updates all 
 @artist_bp.route("/artist-dashboard/<tag>/update-profile", methods=["PUT"])
 def update_artist_profile(tag):
     tag = unquote(tag)
     data = request.json
     new_name = data.get("stage_name")
-    new_label_name = data.get("label_name")
-
-    if not new_name:
-        return jsonify({"error": "Stage name is required."}), 400
-
+    
     conn = get_db_connection()
     cursor = conn.cursor()
-
+    
     try:
-        label_id = None
-        if new_label_name:
-            # Try to get label by name
-            result = cursor.execute("SELECT Label_ID FROM Record_Label WHERE Label_Name = ?", (new_label_name,)).fetchone()
-            if result:
-                label_id = result["Label_ID"]
-            else:
-                # Insert label if it doesn't exist
-                cursor.execute("INSERT INTO Record_Label (Label_Name) VALUES (?)", (new_label_name,))
-                label_id = cursor.lastrowid
-
-        # Update the artist info
-        cursor.execute("""
-            UPDATE Artist SET Stage_Name = ?, Label_ID = ? WHERE Tag = ?
-        """, (new_name, label_id, tag))
-
+        # VULNERABLE QUERY
+        query = f"UPDATE Artist SET Stage_Name = '{new_name}' WHERE Tag = '{tag}'"
+        print("EXECUTING:", query)  # Debug output
+        
+        cursor.execute(query)
         conn.commit()
-        return jsonify({"message": "Artist profile updated."}), 200
-
+        
+        return jsonify({
+            "message": "Update processed",
+            "affected_rows": cursor.rowcount
+        })
+        
     except Exception as e:
         conn.rollback()
         return jsonify({"error": str(e)}), 500
-
     finally:
         conn.close()
 
