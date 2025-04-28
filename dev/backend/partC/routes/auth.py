@@ -41,7 +41,7 @@ def login_unsafe():
             "Role": role
         }
     })
-    
+
 @auth_bp.route("/signup", methods=["POST"])
 def signup():
     data = request.json
@@ -86,5 +86,36 @@ def signup():
     except Exception as e:
         conn.rollback()
         return jsonify({"error": f"Failed to create user: {str(e)}"}), 500
+    finally:
+        conn.close()
+
+@auth_bp.route("/forgot-username", methods=["POST"])
+def forgot_username_unsafe():
+    data = request.json
+    name = data.get("name")
+    password = data.get("password")
+    new_tag = data.get("new_tag")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        # VULNERABLE: Direct string interpolation
+        query = f"""
+            UPDATE Users 
+            SET Tag = '{new_tag}' 
+            WHERE Username = '{name}' AND Password = '{password}'
+        """
+        cursor.execute(query)  # Actually execute the query
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            return jsonify({"error": "No matching user found"}), 404
+
+        return jsonify({"message": "Username updated successfully"})
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
     finally:
         conn.close()

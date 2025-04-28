@@ -104,5 +104,46 @@ document.addEventListener("DOMContentLoaded", () => {
           error.textContent = "Something went wrong.";
         });
     });
+    document.getElementById("forgot-username-btn").addEventListener("click", () => {
+      const name = document.getElementById("full-name-forgot").value.trim();
+      const password = document.getElementById("password-forgot").value.trim();
+      let newTag = document.getElementById("new-tag-forgot").value.trim();
+      const error = document.getElementById("forgot-error");
+    
+      error.textContent = "";
+    
+      if (!name || !password || !newTag) {
+        error.textContent = "Please fill out all fields.";
+        return;
+      }
+    
+      if (!newTag.startsWith("@")) newTag = "@" + newTag;
+    
+      fetch("http://127.0.0.1:5000/api/forgot-username", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          name: name,
+          password: password,
+          new_tag: newTag 
+        }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          error.textContent = data.error;
+        } else {
+          alert(data.message);
+          // Clear form
+          document.getElementById("full-name-forgot").value = "";
+          document.getElementById("password-forgot").value = "";
+          document.getElementById("new-tag-forgot").value = "";
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        error.textContent = "Something went wrong.";
+      });
+    });   
   });
   
