@@ -89,39 +89,3 @@ def signup():
     finally:
         conn.close()
 
-@auth_bp.route("/forgot-username", methods=["POST"])
-def forgot_username_unsafe():
-    data = request.json
-    real_name = data.get("name")       # Full name like "Nate Dow"
-    password = data.get("password")
-    new_tag = data.get("new_tag")
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    try:
-        # FIRST check if user exists by real name and password
-        check_query = f"SELECT * FROM Users WHERE Username = '{real_name}' AND Password = '{password}'"
-        print("[DEBUG] Checking for user:", check_query)
-        user = cursor.execute(check_query).fetchone()
-
-        if not user:
-            print("[DEBUG] No matching user found!")
-            return jsonify({"error": "No user found with those credentials"}), 404
-
-        # If user found, UPDATE the Tag
-        update_query = f"UPDATE Users SET Tag = '{new_tag}' WHERE Username = '{real_name}' AND Password = '{password}'"
-        print("[DEBUG] Update Query:", update_query)
-
-        cursor.execute(update_query)
-        conn.commit()
-
-        return jsonify({"message": "Username (Tag) updated successfully!"})
-
-    except Exception as e:
-        conn.rollback()
-        print("[DEBUG] Error:", str(e))
-        return jsonify({"error": str(e)}), 500
-    finally:
-        conn.close()
-
