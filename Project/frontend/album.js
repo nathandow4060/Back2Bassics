@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
             `;
 
-            // ✅ Update album cover image
+            //Update album cover image
             const albumImage = document.querySelector("img[alt='Album Cover']");
             if (albumImage && data.Image_URL) {
                 albumImage.src = data.Image_URL;
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Failed to fetch reviews:", err));
 
-    // ✅ Add event listener for album Like button
+    //Add event listener for album Like button
     const albumLikeButton = document.querySelector("#album-like-btn");
     if (albumLikeButton) {
         albumLikeButton.addEventListener("click", () => {
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(res => res.json())
             .then(response => {
-                console.log("✅ Like added:", response);
+                console.log("Like added:", response);
                 showNotification("Album liked!");
                 setTimeout(() => window.location.reload(), 2000);
             })
@@ -161,11 +161,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             showNotification("Album rated!");
             document.getElementById("rating-modal").style.display = "none";
-            console.log("✅ Rated:", data);
+            console.log("Rated:", data);
             setTimeout(() => window.location.reload(), 2000);
         })
         .catch(err => {
-            console.error("❌ Rating failed", err);
+            console.error("Rating failed", err);
             showNotification("Error submitting rating.");
         });
     });
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => window.location.reload(), 2000);
         })
         .catch(err => {
-            console.error("❌ Review failed", err);
+            console.error("Review failed", err);
             showNotification("Error submitting review.");
         });
     });

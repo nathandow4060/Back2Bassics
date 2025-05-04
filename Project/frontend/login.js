@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             alert("Account created! You can now log in.");
             document.getElementById("signup-modal").style.display = "none";
-            // ✅ Clear form fields
+            // Clear form fields
             document.getElementById("new-tag").value = "";
             document.getElementById("full-name").value = "";
             document.getElementById("new-password").value = "";

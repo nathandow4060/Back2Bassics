@@ -21,4 +21,4 @@ def execute_sql_file(filename):
 # Create schema and views
 execute_sql_file('create.sql')
 execute_sql_file('create_views.sql')
-print("✅ Database initialized and views created.")
+print("Database initialized and views created.")

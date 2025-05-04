@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ new_name: newName })
       }).then(() => {
-        alert("✅ Playlist renamed.");
+        alert("Playlist renamed.");
         editModal.style.display = "none";
         loadPlaylists();
       });
@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Error: " + response.error);
             return;
           }
-          alert("✅ Playlist created.");
+          alert("Playlist created.");
           createModal.style.display = "none";
           loadPlaylists();
         });

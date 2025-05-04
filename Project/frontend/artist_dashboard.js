@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formattedDate = track.date_released.split("T")[0];
             document.getElementById("update-track-date").value = formattedDate;
         } else {
-            console.warn("⚠️ No date_released found for track:", track);
+            console.warn("No date_released found for track:", track);
             document.getElementById("update-track-date").value = "";
         }
         
@@ -468,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("update-track-minutes").value = minutes;
             document.getElementById("update-track-seconds").value = seconds;
         } else {
-            console.warn("⚠️ track.length missing or invalid:", track);
+            console.warn("track.length missing or invalid:", track);
             document.getElementById("update-track-minutes").value = 0;
             document.getElementById("update-track-seconds").value = 0;
         }
@@ -517,12 +517,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Error: " + response.error);
                 return;
             }
-            alert("✅ Track updated!");
+            alert("Track updated!");
             updateModal.style.display = "none";
             loadAlbumsAndTracks();
         })
         .catch(err => {
-            console.error("🚫 Update failed:", err);
+            console.error("The Update failed:", err);
             alert("Something went wrong while updating the track.");
         });
     });
@@ -553,12 +553,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Error: " + response.error);
                 return;
             }
-            alert("✅ Album updated!");
+            alert("Album updated!");
             document.getElementById("update-album-modal").style.display = "none";
             loadAlbumsAndTracks();
         })
         .catch(err => {
-            console.error("🚫 Failed to update album:", err);
+            console.error("Failed to update album:", err);
             alert("Something went wrong while updating the album.");
         });
     });
@@ -583,7 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href = "login.html";
             })
             .catch(err => {
-                console.error("🚫 Failed to delete user:", err);
+                console.error("Failed to delete user:", err);
                 alert("Something went wrong while deleting your account.");
             });
         }

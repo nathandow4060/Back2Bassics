@@ -33,7 +33,7 @@ def load_csv_to_table(filename, tablename):
     filepath = os.path.join(CSV_DIR, filename)
 
     if not os.path.isfile(filepath):
-        print(f"⚠️  File not found: {filepath}")
+        print(f"File not found: {filepath}")
         return
 
     with open(filepath, 'r', encoding='utf-8') as f:
@@ -50,25 +50,25 @@ def load_csv_to_table(filename, tablename):
             # Special case: Follows table — ensure exactly 2 values
             if tablename == 'Follows':
                 if len(row) != 2:
-                    print(f"⚠️  Malformed row in Follows.csv: {row}")
+                    print(f"Malformed row in Follows.csv: {row}")
                 row = row[:2]
 
             try:
                 cursor.execute(f"INSERT INTO {tablename} VALUES ({placeholders})", row)
             except sqlite3.IntegrityError as e:
                 if tablename == 'Listener':
-                    print(f"⚠️ Skipping duplicate Listener tag: {row[0]}")
+                    print(f"Skipping duplicate Listener tag: {row[0]}")
                 elif tablename == 'Listens_To':
-                    print(f"⚠️ Skipping duplicate Listener-Artist pair: {row[0]}, {row[1]}")
+                    print(f"Skipping duplicate Listener-Artist pair: {row[0]}, {row[1]}")
                 else:
                     raise e
 
         conn.commit()
         conn.close()
-        print(f"✅ Loaded {filename} into {tablename}")
+        print(f"Loaded {filename} into {tablename}")
 
 # Load each CSV file into its corresponding table
 for csv_file, table_name in csv_table_map:
     load_csv_to_table(csv_file, table_name)
 
-print("✅ All specified CSV files loaded successfully.")
+print("All specified CSV files loaded successfully.")

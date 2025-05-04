@@ -9,27 +9,27 @@ def debug_check_new_track():
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    print("🎯 Checking for 'NewNewTest' in Track table")
+    print("Checking for 'NewNewTest' in Track table")
     try:
         track = cursor.execute("SELECT * FROM Track WHERE Title = 'NewNewTest'").fetchone()
         if track:
-            print("✅ Track Found:", dict(track))
+            print("Track Found:", dict(track))
         else:
-            print("❌ Track not found")
+            print("Track not found")
 
         print("\n🔗 Checking Writes mapping for 'NewNewTest'")
         if track:
             track_id = track["Track_ID"]
             writes = cursor.execute("SELECT * FROM Writes WHERE Track_ID = ?", (track_id,)).fetchall()
             for row in writes:
-                print("✍️ Written By:", dict(row))
+                print("Written By:", dict(row))
             if not writes:
-                print("⚠️ No Writes entry found for this track.")
+                print("No Writes entry found for this track.")
         else:
-            print("⚠️ Skipping Writes check since track wasn't found.")
+            print("Skipping Writes check since track wasn't found.")
 
     except Exception as e:
-        print("🔥 Error during query:", e)
+        print("Error during query:", e)
 
     conn.close()
 

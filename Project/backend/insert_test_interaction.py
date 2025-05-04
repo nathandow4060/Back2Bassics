@@ -35,11 +35,11 @@ try:
     cursor.execute("INSERT INTO Review (Interaction_ID, Review_Txt) VALUES (?, ?)", (interaction_id, review_text))
 
     conn.commit()
-    print(f"✅ Inserted test interaction {interaction_id} for album {album_id} (user: {user_tag})")
+    print(f"Inserted test interaction {interaction_id} for album {album_id} (user: {user_tag})")
 
 except sqlite3.IntegrityError as e:
-    print(f"❌ IntegrityError: {e}")
+    print(f"IntegrityError: {e}")
 except Exception as e:
-    print(f"❌ Unexpected error: {e}")
+    print(f"Unexpected error: {e}")
 finally:
     conn.close()

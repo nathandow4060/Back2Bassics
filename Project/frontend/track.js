@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
         `;
 
-        // ✅ Now that we have track data, immediately fetch album info
+        // Now that we have track data, immediately fetch album info
         if (data.Album_ID) {
             fetch(`http://127.0.0.1:5000/api/album/${data.Album_ID}`)
                 .then(res => res.json())
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    // ✅ Update album cover image
+                    //Update album cover image
                     const albumImage = document.querySelector("img[alt='Album Cover']");
                     if (albumImage && albumData.Image_URL) {
                         albumImage.src = albumData.Image_URL;
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Failed to fetch reviews:", err));
 
-    // ✅ Add event listener for track Like button
+    //Add event listener for track Like button
     const trackLikeButton = document.querySelector("#track-like-btn");
     if (trackLikeButton) {
       trackLikeButton.addEventListener("click", () => {

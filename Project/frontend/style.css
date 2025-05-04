@@ -1,0 +1,255 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+.search-container {
+  position: relative;
+  z-index: 10;   /* sits above the main content */
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  max-width: 600px;
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #0af;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1000; /* HIGHER than everything else */
+}
+.suggestions h4 {
+  margin: 8px;
+  font-size: 0.9em;
+  color: #afa;
+}
+.suggestions ul {
+  list-style: none;
+  padding: 0 8px 8px;
+  margin: 0;
+}
+.suggestions li {
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+.suggestions li:last-child { border-bottom: none; }
+.suggestions li:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+body {
+  background-color: #252020;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 0 24px;
+  margin: 0;
+  height: 150vh;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  color: #447a9c;
+  text-decoration: none;
+}
+
+.button {
+  background-color: #447a9c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+  transition-duration: 0.4s
+}
+
+.button:hover, .button:focus {
+  background-color: #0088dd;
+}
+
+.button-gray {
+  background-color: dimgray;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s
+}
+
+.button-gray:hover, .button-gray:focus {
+  background-color: #323232;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content line {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content line:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #e63746;
+  font-family: Raleway;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #3b323238;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  text-align: center;
+  padding: 10px;
+}
+
+.dashboard {
+  margin: auto;
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+  border-style: solid;
+  border-color: #447a9c;
+  padding: 10px;
+}
+
+.imagecenter {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+#notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2c2c2c;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  max-width: 80%;
+  text-align: center;
+}
+
+#notification.show {
+  opacity: 1;
+}
+
+/* Modal base */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #2c2c2c;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 400px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: white;
+}
+
+#artist-suggestions {
+  max-height: 150px;
+  overflow-y: auto;
+  border-radius: 4px;
+}
+
+#artist-suggestions div:hover {
+  background-color: #eee;
+}
