@@ -190,8 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
 
-    loadAlbumsAndTracks();
-
     // Modal logic
     const trackModal = document.getElementById("track-modal");
     const openTrackBtn = document.getElementById("create-track-btn");
@@ -276,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const albumModal = document.getElementById("album-modal");
     const openAlbumBtn = document.getElementById("create-album-btn");
     const closeAlbumBtn = document.getElementById("close-album-modal");
+    const cancelAlbumBtn = document.getElementById("cancel-album-btn");
 
     // Open album modal
     openAlbumBtn.addEventListener("click", () => {
@@ -294,6 +293,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close album modal
     closeAlbumBtn.addEventListener("click", () => {
+        albumModal.style.display = "none";
+    });
+
+    // Close album modal when Cancel button clicked
+    cancelAlbumBtn.addEventListener("click", () => {
         albumModal.style.display = "none";
     });
 
@@ -436,16 +440,38 @@ document.addEventListener("DOMContentLoaded", () => {
     function openUpdateTrackModal(track) {
         currentEditTrackId = track.track_id;
         document.getElementById("update-track-title").value = track.title;
-    
-        // ✅ Extract the date part if there's a timestamp
-        const formattedDate = track.date_released.split("T")[0];
-        document.getElementById("update-track-date").value = formattedDate;
-    
+        
+        if (track.date_released) {
+            const formattedDate = track.date_released.split("T")[0];
+            document.getElementById("update-track-date").value = formattedDate;
+        } else {
+            console.warn("⚠️ No date_released found for track:", track);
+            document.getElementById("update-track-date").value = "";
+        }
+        
         document.getElementById("update-track-genre").value = track.genre || "";
     
-        const lengthParts = track.length.split(":");
-        document.getElementById("update-track-minutes").value = parseInt(lengthParts[1]);
-        document.getElementById("update-track-seconds").value = parseInt(lengthParts[2]);
+        if (track.length && track.length.includes(":")) {
+            const parts = track.length.split(":");
+        
+            let minutes = 0;
+            let seconds = 0;
+        
+            if (parts.length === 2) {
+                minutes = parseInt(parts[0]) || 0;
+                seconds = parseInt(parts[1]) || 0;
+            } else if (parts.length === 3) {
+                minutes = parseInt(parts[1]) || 0;
+                seconds = parseInt(parts[2]) || 0;
+            }
+        
+            document.getElementById("update-track-minutes").value = minutes;
+            document.getElementById("update-track-seconds").value = seconds;
+        } else {
+            console.warn("⚠️ track.length missing or invalid:", track);
+            document.getElementById("update-track-minutes").value = 0;
+            document.getElementById("update-track-seconds").value = 0;
+        }
     
         const dropdown = document.getElementById("update-track-album");
         dropdown.innerHTML = '<option value="">Single (no album)</option>';
@@ -562,6 +588,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+
+    loadAlbumsAndTracks();
 });
 
 

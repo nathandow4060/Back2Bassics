@@ -1,35 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     //const albumId = params.get("albumID");
-    const trackId = params.get("id");
+    const trackId = params.get("trackId");
 
     if (!trackId) {
         console.error("Missing trackId in URL");
         return;
     }
 
+    // ← Grab the logged-in user’s tag once
+    const userTag = localStorage.getItem("user_tag");
+    console.log("DEBUG: posting as", userTag);
+
     // Fetch track details
     fetch(`http://127.0.0.1:5000/api/track/${trackId}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                console.error("API Error:", data.error);
-                return;
-            }
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            console.error("API Error:", data.error);
+            return;
+        }
 
-            // Update the header title
-            document.querySelector("h1").textContent = data.Title || "Track";
+        // Update the header title
+        document.querySelector("h1").textContent = data.Title || "Track";
 
-            // Update track info section
-            document.querySelector("#track-info").innerHTML = `
-                <li><strong>Track:</strong> ${data.Title}</li>
-                <li><strong>Artist:</strong> ${data.Artist_Tag || 'Unknown'}</li>
-                <li><strong>Release:</strong> ${data.Date_Released}</li>
-                <li><strong>Likes:</strong> ${data.Like_Count}</li>
-                <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
-            `;
-        })
-        .catch(err => console.error("Failed to fetch track info:", err));
+        // Update track info section
+        document.querySelector("#track-info").innerHTML = `
+            <li><strong>Track:</strong> ${data.Title}</li>
+            <li><strong>Artist:</strong> ${data.Artist_Tag || 'Unknown'}</li>
+            <li><strong>Release:</strong> ${data.Date_Released}</li>
+            <li><strong>Likes:</strong> ${data.Like_Count}</li>
+            <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
+        `;
+
+        // ✅ Now that we have track data, immediately fetch album info
+        if (data.Album_ID) {
+            fetch(`http://127.0.0.1:5000/api/album/${data.Album_ID}`)
+                .then(res => res.json())
+                .then(albumData => {
+                    if (albumData.error) {
+                        console.error("Album API Error:", albumData.error);
+                        return;
+                    }
+
+                    // ✅ Update album cover image
+                    const albumImage = document.querySelector("img[alt='Album Cover']");
+                    if (albumImage && albumData.Image_URL) {
+                        albumImage.src = albumData.Image_URL;
+                    }
+                })
+                .catch(err => console.error("Failed to fetch album info:", err));
+        }
+    })
+    .catch(err => console.error("Failed to fetch track info:", err));
 
         /*
     // Fetch track tracks
@@ -87,28 +110,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Add event listener for track Like button
     const trackLikeButton = document.querySelector("#track-like-btn");
     if (trackLikeButton) {
-        trackLikeButton.addEventListener("click", () => {
-            fetch(`http://127.0.0.1:5000/api/track/${trackId}/like`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ tag: "@silly_cat" }) // Replace with real user logic later
-            })
-            .then(res => res.json())
-            .then(response => {
-                console.log("✅ Like added:", response);
-                showNotification("Track liked!");
-                // Wait 2 seconds before refreshing
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-            })
-            .catch(err => {
-                console.error("Failed to like track:", err);
-                alert("Something went wrong.");
-            });
-        });
+      trackLikeButton.addEventListener("click", () => {
+        fetch(`http://127.0.0.1:5000/api/track/${trackId}/like`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tag: userTag })
+        })
+        .then(res => res.json())
+        .then(() => {
+          showNotification("Track liked!");
+          setTimeout(() => window.location.reload(), 2000);
+        })
+        .catch(err => console.error("Failed to like track:", err));
+      });
     }
 
     // Open rating modal
@@ -128,31 +142,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Submit rating
     document.querySelector("#submit-rating").addEventListener("click", () => {
-        const rating = parseInt(document.getElementById("rating-slider").value);
-        const trackId = new URLSearchParams(window.location.search).get("trackId");
-
+        const rating = parseInt(document.getElementById("rating-slider").value, 10);
         fetch(`http://127.0.0.1:5000/api/track/${trackId}/rate`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                tag: "@silly_cat",
-                rating: rating
-            }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tag: userTag,
+            rating: rating
+          })
         })
         .then(res => res.json())
-        .then(data => {
-            showNotification("Track rated!");
-            document.getElementById("rating-modal").style.display = "none";
-            console.log("✅ Rated:", data);
-            setTimeout(() => window.location.reload(), 2000);
+        .then(() => {
+          showNotification("Track rated!");
+          document.getElementById("rating-modal").style.display = "none";
+          setTimeout(() => window.location.reload(), 2000);
         })
-        .catch(err => {
-            console.error("❌ Rating failed", err);
-            showNotification("Error submitting rating.");
-        });
-    });
+        .catch(err => console.error("Rating failed:", err));
+      });
 
 
     function showNotification(message) {
@@ -180,30 +186,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Submit review
     document.querySelector("#submit-review").addEventListener("click", () => {
         const reviewText = document.getElementById("review-text").value;
-        const trackId = new URLSearchParams(window.location.search).get("trackId");
-
         fetch(`http://127.0.0.1:5000/api/track/${trackId}/review`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                tag: "@silly_cat",
-                text: reviewText
-            }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tag: userTag,
+            text: reviewText
+          })
         })
         .then(res => res.json())
-        .then(data => {
-            showNotification("Review submitted!");
-            document.getElementById("review-modal").style.display = "none";
-            console.log("✅ Review posted:", data);
-            setTimeout(() => window.location.reload(), 2000);
+        .then(() => {
+          showNotification("Review submitted!");
+          document.getElementById("review-modal").style.display = "none";
+          setTimeout(() => window.location.reload(), 2000);
         })
-        .catch(err => {
-            console.error("❌ Review failed", err);
-            showNotification("Error submitting review.");
-        });
-    });
+        .catch(err => console.error("Review failed:", err));
+      });
 
     const homeBtn = document.getElementById("home-btn");
         if (homeBtn) {

@@ -7,6 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    const userTag = localStorage.getItem("user_tag");
+
+    const Homebutton = document.getElementById("home-btn");
+    if (Homebutton) {
+        Homebutton.addEventListener("click", () => {
+            console.log("🏠 Home button clicked!");
+            window.location.href = "landing.html";
+        });
+    }
+
     // Fetch album details
     fetch(`http://127.0.0.1:5000/api/album/${albumId}`)
         .then(res => res.json())
@@ -27,6 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li><strong>Likes:</strong> ${data.Like_Count}</li>
                 <li><strong>Avg Rating:</strong> ${data.Avg_Rating || 'N/A'}</li>
             `;
+
+            // ✅ Update album cover image
+            const albumImage = document.querySelector("img[alt='Album Cover']");
+            if (albumImage && data.Image_URL) {
+                albumImage.src = data.Image_URL;
+            }
         })
         .catch(err => console.error("Failed to fetch album info:", err));
 
@@ -34,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`http://127.0.0.1:5000/api/album/${albumId}/tracks`)
         .then(res => res.json())
         .then(tracks => {
+            console.log("🎵 TRACKS RECEIVED:", tracks);
+
+
             const trackListContainer = document.querySelector("#track-list");
             trackListContainer.innerHTML = ""; // Clear existing placeholders
 
@@ -49,11 +68,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     formattedLength = `${minutes}:${seconds.toString().padStart(2, '0')}`;
                 }
 
-                trackEl.innerHTML = `
-                    <div style="margin-bottom: 10px;">
-                        <strong>${track.Title}</strong> <span style="color: gray;">(${formattedLength})</span>
-                    </div>
+                console.log(track);
+
+                trackEl.innerHTML = /* html */ `
+                <div style="margin-bottom: 10px;">
+                    <a href="track.html?trackId=${track.Track_ID}" style="text-decoration: none; color: inherit;">
+                    <strong>${track.Title}</strong>
+                    </a> 
+                    <span style="color: gray;">(${formattedLength})</span>
+                </div>
                 `;
+                
                 trackListContainer.appendChild(trackEl);
             });
         })
@@ -86,19 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
         albumLikeButton.addEventListener("click", () => {
             fetch(`http://127.0.0.1:5000/api/album/${albumId}/like`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ tag: "@silly_cat" }) // Replace with real user logic later
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ tag: userTag })
             })
             .then(res => res.json())
             .then(response => {
                 console.log("✅ Like added:", response);
                 showNotification("Album liked!");
-                // Wait 2 seconds before refreshing
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
+                setTimeout(() => window.location.reload(), 2000);
             })
             .catch(err => {
                 console.error("Failed to like album:", err);
@@ -133,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                tag: "@silly_cat",
+                tag: userTag,
                 rating: rating
             }),
         })
@@ -176,23 +196,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Submit review
     document.querySelector("#submit-review").addEventListener("click", () => {
         const reviewText = document.getElementById("review-text").value;
-        const albumId = new URLSearchParams(window.location.search).get("albumId");
-
         fetch(`http://127.0.0.1:5000/api/album/${albumId}/review`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                tag: "@silly_cat",
+                tag: userTag,
                 text: reviewText
-            }),
+            })
         })
         .then(res => res.json())
         .then(data => {
             showNotification("Review submitted!");
             document.getElementById("review-modal").style.display = "none";
-            console.log("✅ Review posted:", data);
             setTimeout(() => window.location.reload(), 2000);
         })
         .catch(err => {

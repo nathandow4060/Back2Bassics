@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listener Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="listener_view.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <h1>
+      <span id="username">[Username]</span>
+      <span id="follower-count" style="font-size: 1rem; color: white; margin-left: 15px;">
+        👥 Followers: loading...
+      </span>
+      <button class="button" id="follow-btn" style="margin-left: 20px;">Follow</button>
+
+      <button class="button-gray" id="home-btn" style="float: right; margin-left: 10px;">
+        🏠 Home
+      </button>
+    </h1>
+
+    <p id="top-artist">Top Artist: loading...</p>
+    <p id="listen-count">Total Listens: loading...</p>
+
+    <div class="card">
+      <h2>Playlists</h2>
+      <div id="playlist-list">
+        <!-- Playlists inserted here -->
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

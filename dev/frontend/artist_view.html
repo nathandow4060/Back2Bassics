@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Artist Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="artist_view.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <h1>
+      <span id="stage-name">[Stage Name]</span>
+      <span id="follower-count" style="font-size: 1rem; color: white; margin-left: 15px;">
+        👥 Followers: loading...
+      </span>
+      <button class="button" id="follow-btn" style="margin-left: 20px;">Follow</button>
+
+      <button class="button-gray" id="home-btn" style="float: right; margin-left: 10px;">
+        🏠 Home
+      </button>
+    </h1>
+
+    <p id="label-info">Label: [Label Name]</p>
+
+    <!-- Albums Section -->
+    <div class="card">
+      <h2>Albums</h2>
+      <div id="album-list">
+        <!-- Album cards inserted here -->
+      </div>
+    </div>
+
+    <!-- Tracks Section -->
+    <div class="card">
+      <h2>Tracks</h2>
+      <div id="track-list">
+        <!-- Track cards inserted here -->
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
